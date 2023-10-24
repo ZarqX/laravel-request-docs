@@ -238,6 +238,10 @@ class LaravelRequestDocs
             $customRules = $this->customParamsDocComment($docComment);
             $doc->setResponses($this->customResponsesDocComment($docComment));
 
+            // Get rules from VALIDATION_RULES constant
+            $doc->mergeRules($this->flattenRules($doc->getControllerFullPath()::VALIDATION_RULES));
+
+
             foreach ($reflectionMethod->getParameters() as $param) {
                 /** @var \ReflectionNamedType|\ReflectionUnionType|\ReflectionIntersectionType|null $namedType */
                 $namedType = $param->getType();
